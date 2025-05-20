@@ -1,0 +1,17 @@
+version: '3.8'
+services:
+  MYSQL:
+    image: mysql:8.0  # imagem oficial
+    container_name: my-mysql
+    restart: always
+    environment:
+      - MYSQL_DATABASE=mysqlDB
+      - MYSQL_ROOT_PASSWORD=mysqlPW
+    ports:
+      - '3306:3306'
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./mysql-volume/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+volumes:
+  mysql-volume:
+    driver: local
