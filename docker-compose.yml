@@ -11,6 +11,23 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
       - ./mysql-volume/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+
+  cassandra_container:
+    image: cassandra:4.1
+    container_name: cassandra-db
+    restart: always
+    ports:
+      - "9042:9042"
+    volumes:
+      - cassandra-data:/var/lib/cassandra
+      - ./cassandra-volume/init.cql:/init.cql
+    environment:
+      - CASSANDRA_CLUSTER_NAME=quantum_cluster
+      - CASSANDRA_START_RPC=true
+
 volumes:
   mysql-data:
+    driver: local
+
+  cassandra-data:
     driver: local
