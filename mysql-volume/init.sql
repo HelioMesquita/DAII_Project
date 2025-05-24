@@ -2,7 +2,7 @@ CREATE DATABASE IF NOT EXISTS QuantumFinance;
 USE QuantumFinance;
 
 -- Tabela de Clientes
-CREATE TABLE IF NOT EXISTS Clients (
+CREATE TABLE IF NOT EXISTS clients (
     cpf CHAR(11) PRIMARY KEY,
     name VARCHAR(50) NOT NULL,
     mail VARCHAR(255) NOT NULL,
@@ -12,7 +12,7 @@ CREATE TABLE IF NOT EXISTS Clients (
 );
 
 -- Tabela de Produtos
-CREATE TABLE IF NOT EXISTS Products (
+CREATE TABLE IF NOT EXISTS products (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     model VARCHAR(255) NOT NULL,
@@ -22,26 +22,26 @@ CREATE TABLE IF NOT EXISTS Products (
 );
 
 -- Tabela de Pedidos
-CREATE TABLE IF NOT EXISTS Orders (
+CREATE TABLE IF NOT EXISTS orders (
     id INT AUTO_INCREMENT PRIMARY KEY,
     cliente_cpf CHAR(11),
     endereco VARCHAR(255),
     cep CHAR(8),
     valor_pago DECIMAL(10,2),
-    FOREIGN KEY (cliente_cpf) REFERENCES Clients(cpf)
+    FOREIGN KEY (cliente_cpf) REFERENCES clients(cpf)
 );
 
 -- Tabela de Itens do Pedido
-CREATE TABLE IF NOT EXISTS OrderItens (
+CREATE TABLE IF NOT EXISTS order_itens (
     id INT AUTO_INCREMENT PRIMARY KEY,
     order_id INT,
     product_id INT,
     quantity INT,
-    FOREIGN KEY (order_id) REFERENCES Orders(id),
-    FOREIGN KEY (product_id) REFERENCES Products(id)
+    FOREIGN KEY (order_id) REFERENCES orders(id),
+    FOREIGN KEY (product_id) REFERENCES products(id)
 );
 
-INSERT INTO Products (name, model, manufacturer, color, size) VALUES
+INSERT INTO products (name, model, manufacturer, color, size) VALUES
 ('Camiseta Básica', 'B100', 'QuantumWear', 'black', 'm'),
 ('Camiseta Esportiva', 'E200', 'QuantumWear', 'white', 'g'),
 ('Camiseta Polo', 'P300', 'QuantumWear', 'gray', 'p'),
@@ -53,7 +53,7 @@ INSERT INTO Products (name, model, manufacturer, color, size) VALUES
 ('Camiseta Slim Fit', 'S900', 'QuantumWear', 'gray', 'g'),
 ('Camiseta Tech', 'T1000', 'QuantumWear', 'black', 'm');
 
-INSERT INTO Clients (cpf, name, mail, address, zip_code, phone) VALUES
+INSERT INTO clients (cpf, name, mail, address, zip_code, phone) VALUES
 ('12345678901', 'João Silva', 'joao@email.com', 'Rua A, 100', '01001000', '11999990001'),
 ('23456789012', 'Maria Souza', 'maria@email.com', 'Rua B, 200', '02002000', '11999990002'),
 ('34567890123', 'Carlos Lima', 'carlos@email.com', 'Rua C, 300', '03003000', '11999990003'),
@@ -66,7 +66,7 @@ INSERT INTO Clients (cpf, name, mail, address, zip_code, phone) VALUES
 ('01234567890', 'Larissa Pinto', 'larissa@email.com', 'Rua J, 1000', '10010000', '11999990010');
 
 -- Pedidos (Orders)
-INSERT INTO Orders (cliente_cpf, endereco, cep, valor_pago) VALUES
+INSERT INTO orders (cliente_cpf, endereco, cep, valor_pago) VALUES
 ('12345678901', 'Rua A, 100', '01001000', 79.90),
 ('23456789012', 'Rua B, 200', '02002000', 129.90),
 ('34567890123', 'Rua C, 300', '03003000', 59.90),
@@ -79,7 +79,7 @@ INSERT INTO Orders (cliente_cpf, endereco, cep, valor_pago) VALUES
 ('01234567890', 'Rua J, 1000', '10010000', 89.90);
 
 -- Itens (OrderItens)
-INSERT INTO OrderItens (order_id, product_id, quantity) VALUES
+INSERT INTO order_itens (order_id, product_id, quantity) VALUES
 (1, 1, 1),
 (2, 2, 1),
 (3, 3, 1),

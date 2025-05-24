@@ -4,7 +4,7 @@ services:
     container_name: my-mysql
     restart: always
     environment:
-      - MYSQL_DATABASE=QuantumFinance
+      - MYSQL_DATABASE=quantum_finance
       - MYSQL_ROOT_PASSWORD=mysqlPW
     ports:
       - '3306:3306'
@@ -20,10 +20,24 @@ services:
       - "9042:9042"
     volumes:
       - cassandra-data:/var/lib/cassandra
-      - ./cassandra-volume/init.cql:/init.cql
     environment:
       - CASSANDRA_CLUSTER_NAME=quantum_cluster
       - CASSANDRA_START_RPC=true
+      
+  cassandra_init:
+    image: python:3.11-slim
+    container_name: cassandra-init
+    depends_on:
+      - cassandra_container
+    volumes:
+      - ./scripts:/app
+    working_dir: /app
+    entrypoint: >
+      bash -c "
+        until nc -z cassandra_container 9042; do sleep 2; done;
+        pip install --no-cache-dir -r requirements.txt;
+        python initialize_cassandra_container.py;
+      "
 
 volumes:
   mysql-data:

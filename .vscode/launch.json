@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Python: insert_orders",
+      "type": "python",
+      "request": "launch",
+      "program": "${workspaceFolder}/scripts/initialize_cassandra_container.py",
+      "console": "integratedTerminal"
+    }
+  ]
+}
