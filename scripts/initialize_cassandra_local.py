@@ -3,7 +3,6 @@ from collections import namedtuple
 from uuid import uuid4
 import random
 
-# cluster = Cluster(['cassandra_container'])
 cluster = Cluster(['localhost'], port=9042)
 session = cluster.connect()
 
